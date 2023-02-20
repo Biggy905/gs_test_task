@@ -47,4 +47,4 @@ RUN apk --no-cache add shadow && usermod -u 1000 www-data
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Set default directory
-WORKDIR /app
+WORKDIR /app/src
