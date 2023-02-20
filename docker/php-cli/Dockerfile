@@ -34,15 +34,6 @@ RUN pecl install -o -f imagick\
 # Copy configs
 COPY ./docker/php/config /usr/local/etc/php/conf.d
 
-# NodeJS
-RUN apk add --update bash supervisor npm
-
-RUN npm install -g npm
-
-RUN echo http://dl-2.alpinelinux.org/alpine/edge/community/ >> /etc/apk/repositories
-
-RUN apk --no-cache add shadow && usermod -u 1000 www-data
-
 # Install composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
