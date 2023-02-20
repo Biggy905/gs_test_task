@@ -1,7 +1,8 @@
 <?php
 
-$params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$params = require __DIR__ . '/params.php';
+$containers = require  __DIR__ . 'containers.php';
 
 $config = [
     'id' => 'basic',
@@ -50,6 +51,10 @@ $config = [
         ],
     ],
     'params' => $params,
+    'container' => [
+        'singletons' => $containers,
+        'definitions' => [],
+    ],
 ];
 
 if (YII_ENV_DEV) {
