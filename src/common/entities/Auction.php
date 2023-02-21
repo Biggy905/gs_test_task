@@ -18,6 +18,8 @@ use yii\db\ActiveQuery;
  * @property string $updated_at
  * @property string $deleted_at
  *
+ * @property AuctionUser $user
+ * @property Product $product
  */
 final class Auction extends Model
 {
