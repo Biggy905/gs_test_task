@@ -35,17 +35,17 @@ services:
 
   gs_mysql:
     container_name: gs_mysql
-    image: mysql/mysql-server:8.0
+    image: bitnami/mysql:latest
     environment:
       MYSQL_DATABASE: "db"
-      MYSQL_USER: "root"
-      MYSQL_PASSWORD: "root"
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_ROOT_HOST: "%"
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - gs_mysql-db-data:/var/lib/mysql/
       - ./docker/mysql/data/init.sql:/docker-entrypoint-initdb.d/init.sql
-    restart: unless-stopped
+    restart: always
 
   gs_queue:
     container_name: gs_queue
