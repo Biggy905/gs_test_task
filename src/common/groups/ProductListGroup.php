@@ -8,7 +8,7 @@ final class ProductListGroup
     {
         $data = [];
         foreach ($products as $product) {
-            $data[] = new ProductGroup($product);
+            $data[] = ProductGroup::toArray($product);
         }
 
         return $data;
