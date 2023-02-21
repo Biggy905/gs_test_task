@@ -1,15 +1,16 @@
 <?php
 
-$params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$params = require __DIR__ . '/params.php';
+$container = require __DIR__ . '/containers.php';
 
 $config = [
     'id' => 'base-console',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
-    'controllerNamespace' => 'console\commands',
-    'aliases' => [
-        '@tests' => '@app/tests',
+    'controllerNamespace' => 'console\controllers',
+    'bootstrap' => [
+        'log',
+        'queue',
     ],
     'controllerMap' => [
         'migrate' => [
@@ -22,7 +23,7 @@ $config = [
         ],
         'fixture' => [
             'class' => \yii\console\controllers\FixtureController::class,
-            'namespace' => 'tests\_fixtures',
+            'namespace' => 'console\fixtures',
         ],
     ],
     'components' => [
@@ -31,6 +32,17 @@ $config = [
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
+        ],
+        'redis' => [
+            'class' => \yii\redis\Connection::class,
+            'retries' => 1,
+            'socketClientFlags' => STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT,
+        ],
+        'queue' => [
+            'class' => \yii\queue\redis\Queue::class,
+            'commandClass' => \common\components\queue\QueueCommand::class,
+            'redis' => 'redis',
+            'channel' => 'main',
         ],
         'log' => [
             'targets' => [
@@ -41,6 +53,10 @@ $config = [
             ],
         ],
         'db' => $db,
+    ],
+    'container' => [
+        'singletons' => $container,
+        'definitions' => [],
     ],
     'params' => $params,
 ];

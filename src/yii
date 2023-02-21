@@ -9,7 +9,7 @@ use yii\console\Application;
 use Dotenv\Dotenv;
 
 (Dotenv::createUnsafeImmutable(
-    Yii::getAlias('@app'),
+    Yii::getAlias('@root'),
     ['.env'],
     false
 ))->load();
@@ -18,4 +18,3 @@ $config = require __DIR__ . '/common/config/console.php';
 
 $exitCode = (new Application($config))->run();
 exit($exitCode);
-
