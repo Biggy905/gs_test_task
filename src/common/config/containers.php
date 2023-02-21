@@ -30,4 +30,9 @@ return [
             ]
         );
     },
+
+    \common\repositories\AuctionsRepositoryInterface::class => \common\repositories\databases\AuctionsRepository::class,
+    \common\repositories\AuctionUsersRepositoryInterface::class => \common\repositories\databases\AuctionUsersRepository::class,
+    \common\repositories\ProductsRepositoryInterface::class => \common\repositories\databases\ProductsRepository::class,
+    \common\repositories\CategoriesRepositoryInterface::class => \common\repositories\databases\CategoriesRepository::class,
 ];

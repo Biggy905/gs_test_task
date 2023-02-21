@@ -3,13 +3,37 @@
 namespace common\entities;
 
 use common\components\Model;
+use common\helpers\DateTimeHelpers;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 
+/**
+ * @property string $id
+ * @property string $id_product
+ * @property string $id_user
+ * @property string $name
+ * @property string $status
+ * @property string $data
+ * @property string $created_at
+ * @property string $updated_at
+ * @property string $deleted_at
+ *
+ */
 final class Auction extends Model
 {
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'auctions';
+    }
+
+    public function behaviors(): array
+    {
+        return [
+            'DefaultTimestampBehaviour' => [
+                'class' => TimestampBehavior::class,
+                'value' => DateTimeHelpers::createDateTime(),
+            ],
+        ];
     }
 
     public function getProduct(): ActiveQuery
