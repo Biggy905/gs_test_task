@@ -2,12 +2,18 @@
 
 namespace common\repositories\databases;
 
+use common\entities\Category;
 use common\entities\Product;
 use common\queries\CategoryQuery;
 use common\repositories\ProductsRepositoryInterface;
 
 final class ProductsRepository implements ProductsRepositoryInterface
 {
+    public function findById(string $id): ?Product
+    {
+        return Product::find()->byId($id)->one();
+    }
+
     public function filter(array $filters): array
     {
         $query = $this->findAllQuery();
@@ -42,12 +48,10 @@ final class ProductsRepository implements ProductsRepositoryInterface
     private function findAllQuery(): \yii\db\ActiveQuery
     {
         return Product::find()
-            ->with(
-                [
-                    'category' => static function (CategoryQuery $query) {
-                        $query->withTrashed();
-                    },
-                ]
+            ->join(
+                'INNER JOIN',
+                Category::tableName(),
+                Category::tableName() . '.id = ' . Product::tableName() . '.id_category'
             );
     }
 }
