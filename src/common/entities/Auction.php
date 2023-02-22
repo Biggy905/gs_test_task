@@ -2,6 +2,7 @@
 
 namespace common\entities;
 
+use common\components\db\SoftDeleteTrait;
 use common\components\Model;
 use common\helpers\DateTimeHelpers;
 use yii\behaviors\TimestampBehavior;
@@ -23,6 +24,10 @@ use yii\db\ActiveQuery;
  */
 final class Auction extends Model
 {
+    use SoftDeleteTrait {
+        SoftDeleteTrait::find as public findTrait;
+    }
+
     public static function tableName(): string
     {
         return 'auctions';
