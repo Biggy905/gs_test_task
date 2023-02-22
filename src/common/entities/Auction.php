@@ -15,6 +15,10 @@ use yii\db\ActiveQuery;
  * @property string $name
  * @property string $status
  * @property string $data
+ * @property string $start_time
+ * @property string $end_time
+ * @property string $start_date
+ * @property string $end_date
  * @property string $created_at
  * @property string $updated_at
  * @property string $deleted_at
