@@ -10,7 +10,7 @@ final class ProductGroup
     {
         return [
             'name' => $product->name,
-            'category' => $product->category,
+            'category' => $product->category->name,
             'created_at' => $product->created_at,
         ];
     }

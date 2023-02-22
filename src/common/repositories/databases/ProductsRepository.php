@@ -19,14 +19,14 @@ final class ProductsRepository implements ProductsRepositoryInterface
         $query = $this->findAllQuery();
 
         $page = $filters['page'] ?? 1;
-        $limit = $filters['limit'] ?? 25;
+        $limit = $filters['limit'] ?? 10;
 
         if ($page < 1) {
             $page = 1;
         }
 
-        if ($limit < 1 || $limit >= 50) {
-            $limit = 25;
+        if ($limit < 1 || $limit >= 25) {
+            $limit = 10;
         }
 
         if ($page && $limit) {
@@ -35,12 +35,17 @@ final class ProductsRepository implements ProductsRepositoryInterface
         }
 
         $sortFieldDirection = (string) ($filters['sort_direction'] ?? '');
+
         $sortDirection = match ($sortFieldDirection) {
-            'asc' => SORT_ASC,
-            default => SORT_DESC,
+            'asc' => 'SORT_ASC',
+            default => 'SORT_DESC',
         };
 
-        $query->groupBy(['created_at' => $sortDirection]);
+        $query->orderBy(
+            [
+                'created_at' => $sortDirection
+            ]
+        );
 
         return $query->all();
     }
