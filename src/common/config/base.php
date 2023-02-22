@@ -2,7 +2,7 @@
 
 $db = require __DIR__ . '/db.php';
 $params = require __DIR__ . '/params.php';
-$containers = require  __DIR__ . 'containers.php';
+$containers = require  __DIR__ . '/containers.php';
 
 $config = [
     'id' => 'basic',
@@ -32,15 +32,6 @@ $config = [
             'viewPath' => '@app/mail',
             // send all mails to a file by default.
             'useFileTransport' => true,
-        ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
         ],
         'db' => $db,
         'urlManager' => [

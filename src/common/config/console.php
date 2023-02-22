@@ -44,14 +44,6 @@ $config = [
             'redis' => 'redis',
             'channel' => 'main',
         ],
-        'log' => [
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
         'db' => $db,
     ],
     'container' => [
