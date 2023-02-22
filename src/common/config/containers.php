@@ -31,6 +31,9 @@ return [
         );
     },
 
+    \common\services\AuctionService::class => \common\services\AuctionService::class,
+    \common\services\ProductService::class => \common\services\ProductService::class,
+
     \common\repositories\AuctionsRepositoryInterface::class => \common\repositories\databases\AuctionsRepository::class,
     \common\repositories\AuctionUsersRepositoryInterface::class => \common\repositories\databases\AuctionUsersRepository::class,
     \common\repositories\ProductsRepositoryInterface::class => \common\repositories\databases\ProductsRepository::class,

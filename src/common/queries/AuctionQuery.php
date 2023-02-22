@@ -3,6 +3,7 @@
 namespace common\queries;
 
 use common\components\db\SoftDeleteQueryTrait;
+use common\entities\Auction;
 use yii\db\ActiveQuery;
 
 final class AuctionQuery extends ActiveQuery
@@ -11,6 +12,10 @@ final class AuctionQuery extends ActiveQuery
 
     public function byId(string $id): ActiveQuery
     {
-        return $this->andWhere(['id' => $id]);
+        return $this->andWhere(
+            [
+                Auction::tableName() . '.id' => $id
+            ]
+        );
     }
 }

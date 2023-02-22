@@ -3,6 +3,7 @@
 namespace common\services;
 
 use common\entities\Auction;
+use common\groups\AuctionGroup;
 use common\groups\AuctionListGroup;
 use common\repositories\databases\AuctionsRepository;
 use DomainException;
@@ -16,7 +17,7 @@ final class AuctionService
 
     }
 
-    public function findByid(string $id): Auction
+    public function findByid(string $id): array
     {
         $auction = $this->auctionsRepository->findId($id);
 
@@ -24,7 +25,7 @@ final class AuctionService
             throw new DomainException(Yii::t('auctions', 'errors.not_found'));
         }
 
-        return $auction;
+        return AuctionGroup::toArray($auction);
     }
 
     public function findAll(array $filters): array
