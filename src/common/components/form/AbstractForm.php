@@ -4,17 +4,15 @@ namespace common\components\form;
 
 use ReflectionClass;
 use ReflectionProperty;
-use Yiisoft\Validator\Result;
+use Yiisoft\Validator\Error;
 use Yiisoft\Validator\Validator;
-use Yiisoft\Validator\ValidatorInterface;
 
 abstract class AbstractForm implements FormInterface
 {
-    private ValidatorInterface $validator;
-    private Result $result;
+    public function __construct(
+        public Validator $validator
+    ) {
 
-    public function __construct() {
-        $this->validator = new Validator();
     }
 
     abstract protected function rules(): array;
@@ -23,12 +21,23 @@ abstract class AbstractForm implements FormInterface
     {
         $validate = $this->validator->validate($this->getAttributes(), $this->rules());
         $isValid = $validate->isValid();
-
         if (!$isValid) {
-            return $this->result->getErrors();
+            return $this->getErrors($validate);
         }
 
         return [];
+    }
+
+    private function getErrors($validate): array
+    {
+        $data = [];
+        foreach ($validate->getErrors() as $validator) {
+            if ($validator instanceof Error) {
+                $data[] = $validator->getMessage();
+            }
+        }
+
+        return $data;
     }
 
     public function setAttributes(array $attributes = []): void

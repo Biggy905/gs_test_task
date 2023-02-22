@@ -30,6 +30,7 @@ return [
             ]
         );
     },
+    \Yiisoft\Validator\ValidatorInterface::class => Yiisoft\Validator\Validator::class,
 
     \common\services\AuctionService::class => \common\services\AuctionService::class,
     \common\services\ProductService::class => \common\services\ProductService::class,
