@@ -9,6 +9,7 @@ final class AuctionGroup
     public static function toArray(Auction $auction): array
     {
         return [
+            'id' => $auction->id,
             'name' => $auction->name,
             'product' => $auction->product->name,
             'category' => $auction->product->category->name,

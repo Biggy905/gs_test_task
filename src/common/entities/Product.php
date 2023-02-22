@@ -43,6 +43,6 @@ final class Product extends Model
 
     public function getCategory(): ActiveQuery
     {
-        return $this->hasMany(Category::class, ['id' => 'id_category']);
+        return $this->hasOne(Category::class, ['id' => 'id_category']);
     }
 }

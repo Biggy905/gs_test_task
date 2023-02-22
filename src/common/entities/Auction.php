@@ -49,11 +49,16 @@ final class Auction extends Model
 
     public function getProduct(): ActiveQuery
     {
-        return $this->hasMany(Product::class, ['id' => 'id_product']);
+        return $this->hasOne(Product::class, ['id' => 'id_product'])
+            ->join(
+                'INNER JOIN',
+                Category::tableName(),
+                Category::tableName() . '.id =' . Product::tableName() . '.id_category'
+            );
     }
 
     public function getUser(): ActiveQuery
     {
-        return $this->hasMany(AuctionUser::class, ['id' => 'id_user']);
+        return $this->hasOne(AuctionUser::class, ['id' => 'id_user']);
     }
 }

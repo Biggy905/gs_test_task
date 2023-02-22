@@ -3,26 +3,30 @@
 namespace common\repositories\databases;
 
 use common\entities\Auction;
-use common\queries\AuctionUserQuery;
-use common\queries\CategoryQuery;
-use common\queries\ProductQuery;
+use common\entities\AuctionUser;
+use common\entities\Product;
 use common\repositories\AuctionsRepositoryInterface;
 
 final class AuctionsRepository implements AuctionsRepositoryInterface
 {
+    public function findId(string $id): ?Auction
+    {
+        return Auction::find()->byId($id)->one();
+    }
+
     public function filter(array $filters): array
     {
         $query = $this->findAllQuery();
 
         $page = $filters['page'] ?? 1;
-        $limit = $filters['limit'] ?? 25;
+        $limit = $filters['limit'] ?? 10;
 
         if ($page < 1) {
             $page = 1;
         }
 
-        if ($limit < 1 || $limit >= 50) {
-            $limit = 25;
+        if ($limit < 1 || $limit >= 25) {
+            $limit = 10;
         }
 
         if ($page && $limit) {
@@ -31,12 +35,17 @@ final class AuctionsRepository implements AuctionsRepositoryInterface
         }
 
         $sortFieldDirection = (string) ($filters['sort_direction'] ?? '');
+
         $sortDirection = match ($sortFieldDirection) {
-            'asc' => SORT_ASC,
-            default => SORT_DESC,
+            'asc' => 'SORT_ASC',
+            default => 'SORT_DESC',
         };
 
-        $query->groupBy(['created_at' => $sortDirection]);
+        $query->orderBy(
+            [
+                'created_at' => $sortDirection
+            ]
+        );
 
         return $query->all();
     }
@@ -44,18 +53,15 @@ final class AuctionsRepository implements AuctionsRepositoryInterface
     private function findAllQuery(): \yii\db\ActiveQuery
     {
         return Auction::find()
-            ->with(
-                [
-                    'category' => static function (CategoryQuery $query) {
-                        $query->withTrashed();
-                    },
-                    'product' => static function (ProductQuery $query) {
-                        $query->withTrashed();
-                    },
-                    'user' => static function (AuctionUserQuery $query) {
-                        $query->withTrashed();
-                    },
-                ]
+            ->join(
+                'INNER JOIN',
+                Product::tableName(),
+                Product::tableName() . '.id = ' . Auction::tableName() . '.id_product'
+            )
+            ->join(
+                'INNER JOIN',
+                AuctionUser::tableName(),
+                AuctionUser::tableName() . '.id = ' . Auction::tableName() . '.id_user'
             );
     }
 }
