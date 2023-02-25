@@ -37,5 +37,11 @@ COPY ./docker/php/config /usr/local/etc/php/conf.d
 # Install composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
+# Update user
+RUN apk add -U shadow
+
+ARG user_id=1000
+RUN usermod -u $user_id www-data
+
 # Set default directory
 WORKDIR /app/src
