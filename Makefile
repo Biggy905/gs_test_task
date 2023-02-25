@@ -12,3 +12,5 @@ migrate:
 	docker-compose run --rm gs_php_cli php ./yii migrate -- --interactive=0
 fixtures:
 	docker-compose run --rm gs_php_cli php ./yii fixtures -- --interactive=0
+websocket:
+	docker-compose run --rm gs_php_fpm php ./yii websocket/run
