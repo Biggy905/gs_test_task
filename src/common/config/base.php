@@ -40,6 +40,16 @@ $config = [
             'rules' => [
             ],
         ],
+        'i18n' => [
+            'translations' => [
+                'forceTranslation' => true,
+                '*' => [
+                    'class' => \common\components\i18n\PhpMessageSource::class,
+                    'basePath' => '@common/messages/ru/',
+                    //'sourceLanguage' => 'ru',
+                ],
+            ],
+        ],
     ],
     'params' => $params,
     'container' => [

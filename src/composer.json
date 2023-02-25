@@ -15,7 +15,8 @@
         "psr/simple-cache": "^3.0",
         "vlucas/phpdotenv": "^5.5@dev",
         "monolog/monolog": "^3.2",
-        "symfony/cache": "^6.1"
+        "symfony/cache": "^6.1",
+        "cboden/ratchet": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

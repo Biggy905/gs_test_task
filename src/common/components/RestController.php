@@ -5,7 +5,7 @@ namespace common\components;
 use yii\filters\ContentNegotiator;
 use yii\web\Response;
 
-abstract class Controller extends \yii\web\Controller
+abstract class RestController extends \yii\web\Controller
 {
     public function behaviors(): array
     {

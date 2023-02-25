@@ -3,7 +3,7 @@
 return [
     [
         'verb' => ['get'],
-        'pattern' => '',
+        'pattern' => '/',
         'route' => 'site/index'
     ],
 ];
