@@ -5,12 +5,13 @@ namespace common\entities;
 use common\components\db\SoftDeleteTrait;
 use common\components\Model;
 use common\helpers\DateTimeHelpers;
+use common\queries\ProductQuery;
 use yii\db\ActiveQuery;
 use yii\behaviors\TimestampBehavior;
 
 /**
- * @property string $id
- * @property string $id_category
+ * @property int $id
+ * @property int $id_category
  * @property string $name
  * @property string $data
  * @property string $created_at
@@ -39,6 +40,11 @@ final class Product extends Model
                 'value' => DateTimeHelpers::createDateTime(),
             ],
         ];
+    }
+
+    public static function find(): ProductQuery
+    {
+        return (new ProductQuery(get_called_class()))->andWhere(self::findTrait()->where);
     }
 
     public function getCategory(): ActiveQuery

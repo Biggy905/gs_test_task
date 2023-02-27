@@ -5,16 +5,17 @@ namespace common\entities;
 use common\components\db\SoftDeleteTrait;
 use common\components\Model;
 use common\helpers\DateTimeHelpers;
+use common\queries\AuctionQuery;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 
 /**
- * @property string $id
- * @property string $id_product
- * @property string $id_user
+ * @property int $id
+ * @property int $id_product
+ * @property int $id_user
  * @property string $name
  * @property string $status
- * @property string $data
+ * @property array $data
  * @property string $start_time
  * @property string $end_time
  * @property string $start_date
@@ -47,6 +48,11 @@ final class Auction extends Model
         ];
     }
 
+    public static function find(): AuctionQuery
+    {
+        return (new AuctionQuery(get_called_class()))->andWhere(self::findTrait()->where);
+    }
+
     public function getProduct(): ActiveQuery
     {
         return $this->hasOne(Product::class, ['id' => 'id_product'])
@@ -60,5 +66,20 @@ final class Auction extends Model
     public function getUser(): ActiveQuery
     {
         return $this->hasOne(AuctionUser::class, ['id' => 'id_user']);
+    }
+
+    public function getTotal(): int
+    {
+        $data = $this->data;
+        $bet = [];
+        foreach ($data as $array) {
+            if (!empty($array['bet'])) {
+                $bet[] = $array['bet'];
+            }
+        }
+
+        $total = array_sum($bet);
+
+        return $total;
     }
 }
