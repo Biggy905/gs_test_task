@@ -16,7 +16,7 @@ final class ProductService
 
     }
 
-    public function findId(string $id): array
+    public function findId(int $id): array
     {
         $auction = $this->productsRepository->findById($id);
         if (empty($auction)) {
