@@ -17,6 +17,10 @@ Launch project:
 make up
 ~~~
 
+Install dependincies:
+~~~
+make composer-install
+~~~
 Migrate to db:
 ~~~
 make migrate
@@ -27,10 +31,16 @@ Load fixture to db:
 make fixtures
 ~~~
 
-Install dependincies:
+Run websocket <br/>
+Step 1:
 ~~~
-make composer-install
+docker exec -it gs_php_fpm sh
 ~~~
+Step 2:
+~~~
+php yii websocket/run
+~~~
+
 
 Web-service available by:
 ~~~
