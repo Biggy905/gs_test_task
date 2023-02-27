@@ -11,6 +11,7 @@ final class AuctionGroup
         return [
             'id' => $auction->id,
             'name' => $auction->name,
+            'total' => $auction->getTotal(),
             'status' => $auction->status,
             'product' => $auction->product->name,
             'category' => $auction->product->category->name,
