@@ -5,9 +5,9 @@
 
 use yii\bootstrap5\Html;
 use common\assets\AppAsset;
+use common\widgets\UserAlertWidget;
 
 AppAsset::register($this);
-
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -25,6 +25,11 @@ AppAsset::register($this);
 
 <main id="main" class="flex-shrink-0" role="main">
     <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <?= UserAlertWidget::widget() ?>
+            </div>
+        </div>
         <?= $content ?>
     </div>
 </main>
