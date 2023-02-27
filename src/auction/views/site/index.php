@@ -2,15 +2,33 @@
 
 /** @var yii\web\View $this */
 /** @var array $auctions */
+/** @var array $pagination */
+
+/** @var \yii\web\Session $session */
+
+use yii\widgets\LinkPager;
 
 $this->title = 'Auction list';
+
+$hasSession = $session->session->has('user');
 ?>
 <div class="container">
     <div class="row g-2">
         <div class="col-12">
+            <?php if (empty($hasSession)) { ?>
+                <a href="<?= \yii\helpers\Url::to('site/registration'); ?>">
+                    Регистрация участников
+                </a>
+            <?php } else { ?>
+                <p class="text-info">Вы зашли, под именем <b
+                            class="text-success"><?= $session->session->get('user'); ?></b></p>
+            <?php } ?>
+
+        </div>
+        <div class="col-12">
             <h1 class="text-center">Скандинавский аукцион</h1>
         </div>
-        <?php foreach($auctions as $auction) {
+        <?php foreach ($auctions as $auction) {
             $cssClassStatus = match ($auction['status']) {
                 \common\enums\AuctionStatusEnum::RUN => 'bg-success',
                 \common\enums\AuctionStatusEnum::END => 'bg-secondary',
@@ -22,76 +40,68 @@ $this->title = 'Auction list';
                 \common\enums\AuctionStatusEnum::END => \Yii::t('auctions', 'status.end'),
                 default => \Yii::t('auctions', 'status.new'),
             }; ?>
-            <div class="col-4 card">
+            <div class="col-4">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="card-header <?= $cssClassStatus?>">
-                            <h2><?= \yii\bootstrap5\Html::encode($auction['name'])?></h2>
+                    <div class="col-12 card">
+                        <div class="card-header <?= $cssClassStatus ?>">
+                            <h2><?= \yii\bootstrap5\Html::encode($auction['name']) ?></h2>
                         </div>
                         <div class="card-body">
-                            <p class="text-center <?= $cssClassStatus?>">
-                                <?= $statusText?>
+                            <p class="text-center <?= $cssClassStatus ?>">
+                                <?= $statusText ?>
                             </p>
                             <h4>
-                                <small>Продукт: </small><?= \yii\bootstrap5\Html::encode($auction['product'])?>
+                                <small>Продукт: </small><?= \yii\bootstrap5\Html::encode($auction['product']) ?>
                             </h4>
                             <h4>
-                                <small>Категория: </small><?= \yii\bootstrap5\Html::encode($auction['category'])?>
+                                <small>Категория: </small><?= \yii\bootstrap5\Html::encode($auction['category']) ?>
                             </h4>
                             <p>
-                                Старт: <?= \yii\bootstrap5\Html::encode($auction['start_time'])?>
-                                <?= \yii\bootstrap5\Html::encode($auction['start_date'])?>
+                                Старт: <?= \yii\bootstrap5\Html::encode($auction['start_time']) ?>
+                                <?= \yii\bootstrap5\Html::encode($auction['start_date']) ?>
                             </p>
                             <p>
-                                Конец: <?= \yii\bootstrap5\Html::encode($auction['end_time'])?>
-                                <?= \yii\bootstrap5\Html::encode($auction['end_date'])?>
+                                Конец: <?= \yii\bootstrap5\Html::encode($auction['end_time']) ?>
+                                <?= \yii\bootstrap5\Html::encode($auction['end_date']) ?>
                             </p>
                             <p>
-                                Кто ведет: <?= \yii\bootstrap5\Html::encode($auction['full_name'])?>
+                                Кто ведет: <?= \yii\bootstrap5\Html::encode($auction['full_name']) ?>
                             </p>
                             <p>
-                                Создан: <?= \yii\bootstrap5\Html::encode($auction['created_at'])?>
+                                Создан: <?= \yii\bootstrap5\Html::encode($auction['created_at']) ?>
                             </p>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary" id="<?= \yii\bootstrap5\Html::encode($auction['id'])?>">Сделать ставку</button>
+                            <a class="btn btn-primary" href="auction/<?= $auction['id']?>">Сделать ставку</a>
                         </div>
                     </div>
                 </div>
             </div>
-        <?php }?>
-    </div>
-</div>
+        <?php } ?>
 
-<div class="modal" tabindex="-1" id="user-register">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Зарегиструй меня!</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="user-input">Save changes</button>
-            </div>
+        <div class="pagination justify-content-center">
+            <?= LinkPager::widget([
+                'pagination' => $pagination,
+                'registerLinkTags' => true,
+                'options' => [
+                    'class' => 'pagination'
+                ],
+                'maxButtonCount' => 3,
+                'linkOptions' => [
+                    'class' => 'page-link',
+                ],
+                'pageCssClass' => 'page-item',
+                'prevPageCssClass' => 'page-item',
+                'nextPageCssClass' => 'page-item',
+            ]); ?>
         </div>
     </div>
 </div>
 
 <script>
-    const myModal = document.getElementById('user-register');
-    const myInput = document.getElementById('user-input');
-
-    myModal.addEventListener('shown.bs.modal', () => {
-        myInput.focus();
-    })
-</script>
-
-<script>
     var conn = new WebSocket('ws://localhost:3200/websocket');
-    conn.onopen = function(e) { console.log("Connection established!"); };
+    conn.onopen = function (e) {
+        console.log("Connection established!");
+    };
     console.log(conn.onopen);
 </script>
