@@ -11,9 +11,9 @@ final class M230221134759CreateAuctions extends Migration
         $this->createTable(
             '{{%auctions}}',
             [
-                'id' => $this->string(),
-                'id_product' => $this->string(),
-                'id_user' => $this->string(),
+                'id' => $this->primaryKey(11),
+                'id_product' => $this->smallInteger(8),
+                'id_user' => $this->smallInteger(8),
                 'name' => $this->string(),
                 'status' => $this->string(),
                 'data' => $this->json(),
@@ -27,7 +27,10 @@ final class M230221134759CreateAuctions extends Migration
             ]
         );
 
-        $this->addPrimaryKey('auctions_pkey', '{{%auctions}}', 'id');
+        $this->alterColumn(
+            '{{%auctions}}',
+            'id',
+            $this->smallInteger(8).' NOT NULL AUTO_INCREMENT');
 
         $this->createIndex('auctions_name_index', '{{%auctions}}', 'name');
         $this->createIndex('auctions_status_index', '{{%auctions}}', 'status');

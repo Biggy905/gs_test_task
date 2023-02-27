@@ -11,7 +11,7 @@ final class M230221133445CreateProducts extends Migration
         $this->createTable(
             '{{%products}}',
             [
-                'id' => $this->string(),
+                'id' => $this->primaryKey(11),
                 'id_category' => $this->string(),
                 'name' => $this->string(),
                 'data' => $this->json(),
@@ -21,7 +21,10 @@ final class M230221133445CreateProducts extends Migration
             ]
         );
 
-        $this->addPrimaryKey('products_pkey', '{{%products}}', 'id');
+        $this->alterColumn(
+            '{{%products}}',
+            'id',
+            $this->smallInteger(8).' NOT NULL AUTO_INCREMENT');
 
         $this->createIndex('products_name_index', '{{%products}}', 'name');
     }

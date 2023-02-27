@@ -11,7 +11,7 @@ final class M230221134734CreateCategories extends Migration
         $this->createTable(
             '{{%categories}}',
             [
-                'id' => $this->string(),
+                'id' => $this->primaryKey(11),
                 'id_category' => $this->string(),
                 'name' => $this->string(),
                 'data' => $this->json(),
@@ -21,7 +21,10 @@ final class M230221134734CreateCategories extends Migration
             ]
         );
 
-        $this->addPrimaryKey('categories_pkey', '{{%categories}}', 'id');
+        $this->alterColumn(
+            '{{%categories}}',
+            'id',
+            $this->smallInteger(8).' NOT NULL AUTO_INCREMENT');
 
         $this->createIndex('categories_name_index', '{{%categories}}', 'name');
     }
