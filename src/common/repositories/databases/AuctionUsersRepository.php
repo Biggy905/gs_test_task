@@ -9,7 +9,7 @@ use Yii;
 
 final class AuctionUsersRepository implements AuctionUsersRepositoryInterface
 {
-    public function findById(string $id): ?AuctionUser
+    public function findById(int $id): ?AuctionUser
     {
         return AuctionUser::find()->byId($id)->one();
     }

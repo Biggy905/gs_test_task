@@ -5,18 +5,38 @@ namespace common\repositories\databases;
 use common\entities\Auction;
 use common\entities\AuctionUser;
 use common\entities\Product;
+use common\forms\BuyBetForm;
+use common\helpers\DateTimeHelpers;
 use common\repositories\AuctionsRepositoryInterface;
 
 final class AuctionsRepository implements AuctionsRepositoryInterface
 {
-    public function findId(string $id): ?Auction
+    public function findId(int $id): ?Auction
     {
         return Auction::find()->byId($id)->one();
     }
 
     public function filter(array $filters): array
     {
-        $query = $this->findAllQuery();
+        $query = $this->findAllQuery($filters);
+
+        return $query->all();
+    }
+
+    public function findAllQuery(array $filters): \yii\db\ActiveQuery
+    {
+        $query = Auction::find()
+            ->join(
+                'INNER JOIN',
+                Product::tableName(),
+                Product::tableName() . '.id = ' . Auction::tableName() . '.id_product'
+            )
+            ->join(
+                'INNER JOIN',
+                AuctionUser::tableName(),
+                AuctionUser::tableName() . '.id = ' . Auction::tableName() . '.id_user'
+            );
+
 
         $page = $filters['page'] ?? 1;
         $limit = $filters['limit'] ?? 10;
@@ -47,21 +67,29 @@ final class AuctionsRepository implements AuctionsRepositoryInterface
             ]
         );
 
-        return $query->all();
+        return $query;
     }
 
-    private function findAllQuery(): \yii\db\ActiveQuery
-    {
-        return Auction::find()
-            ->join(
-                'INNER JOIN',
-                Product::tableName(),
-                Product::tableName() . '.id = ' . Auction::tableName() . '.id_product'
-            )
-            ->join(
-                'INNER JOIN',
-                AuctionUser::tableName(),
-                AuctionUser::tableName() . '.id = ' . Auction::tableName() . '.id_user'
-            );
+    public function updateData(
+        BuyBetForm $form,
+        Auction $auction,
+        int $id_user,
+        string $user
+    ): Auction {
+        $oldData = (array) $auction->data;
+        $newData = [
+            'bet' => $form->buy_bet,
+            'id_user' => $id_user,
+            'full_name' => $user,
+            'created_at' => DateTimeHelpers::createDateTime(),
+        ];
+
+        $auction->data = array_merge($oldData, $newData);
+        $auction->id_user = $id_user;
+        $auction->updated_at = DateTimeHelpers::createDateTime();
+
+        $auction->save();
+
+        return $auction;
     }
 }

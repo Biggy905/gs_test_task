@@ -9,7 +9,7 @@ use common\repositories\ProductsRepositoryInterface;
 
 final class ProductsRepository implements ProductsRepositoryInterface
 {
-    public function findById(string $id): ?Product
+    public function findById(int $id): ?Product
     {
         return Product::find()->byId($id)->one();
     }
