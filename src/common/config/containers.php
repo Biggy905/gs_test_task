@@ -32,13 +32,23 @@ return [
             ]
         );
     },
+    \yii\web\Session::class => static function() {
+        return new \yii\web\Session;
+    },
+    \yii\web\CookieCollection::class => static function() {
+        return new \yii\web\CookieCollection;
+    },
+
     \Yiisoft\Validator\ValidatorInterface::class => Yiisoft\Validator\Validator::class,
 
     \common\forms\AuctionUserForm::class => \common\forms\AuctionUserForm::class,
+    \common\forms\BuyBetForm::class => \common\forms\BuyBetForm::class,
 
     \common\services\AuctionService::class => \common\services\AuctionService::class,
     \common\services\ProductService::class => \common\services\ProductService::class,
     \common\services\AuctionUserService::class => \common\services\AuctionUserService::class,
+    \common\services\SessionService::class => \common\services\SessionService::class,
+    \common\services\CookieService::class => \common\services\CookieService::class,
 
     \common\repositories\AuctionsRepositoryInterface::class => \common\repositories\databases\AuctionsRepository::class,
     \common\repositories\AuctionUsersRepositoryInterface::class => \common\repositories\databases\AuctionUsersRepository::class,
