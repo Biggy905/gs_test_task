@@ -19,6 +19,9 @@ $config = [
                 ],
             ],
         ],
+        'session' => [
+            'class' => 'yii\web\DbSession',
+        ],
         'request' => [
             'csrfParam' => '_csrf-users',
             'cookieValidationKey' => 'bcd8b1a4-1202-43b7-8bce-1aab868f28e1',
