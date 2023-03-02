@@ -14,6 +14,7 @@ AppAsset::register($this);
 <html lang="<?= Yii::$app->language ?>" class="h-100">
 <head>
     <title><?= Html::encode($this->title) ?></title>
+    <script language="JavaScript" type="text/javascript" src="/js/jquery-3.6.3.min.js"></script>
     <?php $this->head() ?>
 </head>
 <body class="d-flex flex-column h-100">
@@ -42,7 +43,6 @@ AppAsset::register($this);
         </div>
     </div>
 </footer>
-
 <?php $this->endBody() ?>
 </body>
 </html>

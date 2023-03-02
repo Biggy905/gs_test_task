@@ -8,12 +8,13 @@ use Yii;
 
 final class WebsocketController extends Controller
 {
-    private IoServer $server;
-
-    public function __construct($id, $module, $config = [])
-    {
+    public function __construct(
+        $id,
+        $module,
+        public readonly IoServer $server,
+        $config = []
+    ) {
         parent::__construct($id, $module, $config);
-        $this->server = Yii::$app->websocket;
     }
 
     public function actionRun()

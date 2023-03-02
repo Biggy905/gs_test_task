@@ -70,7 +70,7 @@ final class Auction extends Model
 
     public function getTotal(): int
     {
-        $data = $this->data;
+        $data = $this->data ?? [];
         $bet = [];
         foreach ($data as $array) {
             if (!empty($array['bet'])) {

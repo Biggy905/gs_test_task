@@ -39,6 +39,11 @@ return [
         return new \yii\web\CookieCollection;
     },
 
+    \SplObjectStorage::class => \SplObjectStorage::class,
+
+    \common\services\WebSocketService::class => \common\services\WebSocketService::class,
+    \common\components\websocket\IoServer::class => \common\components\websocket\IoServer::class,
+
     \Yiisoft\Validator\ValidatorInterface::class => Yiisoft\Validator\Validator::class,
 
     \common\forms\AuctionUserForm::class => \common\forms\AuctionUserForm::class,

@@ -9,9 +9,8 @@ use Ratchet\Server\IoServer as RatchetServer;
 final class IoServer
 {
     public function __construct(
-        public MessageComponentInterface $command
+        public readonly WebSocketService $command
     ) {
-        $this->command = new WebSocketService();
     }
 
     public function run(): void

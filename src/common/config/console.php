@@ -45,11 +45,6 @@ $config = [
             'channel' => 'main',
         ],
         'db' => $db,
-        'websocket' => static function() {
-            $service = new \common\services\WebSocketService();
-
-            return new \common\components\websocket\IoServer($service);
-        }
     ],
     'container' => [
         'singletons' => $container,

@@ -11,5 +11,5 @@ composer-install:
 migrate:
 	docker-compose run --rm gs_php_cli php ./yii migrate -- --interactive=0
 fixtures:
-	docker-compose run --rm gs_php_cli php ./yii fixtures -- --interactive=0
+	docker-compose run --rm gs_php_cli php ./yii fixture -- --interactive=0
 

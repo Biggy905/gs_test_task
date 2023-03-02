@@ -72,6 +72,8 @@ $hasSession = $session->session->has('user');
                             </p>
                         </div>
                         <div class="card-footer">
+                            <p>Сумма: <span id="count"></span></p>
+                            <pre id='pre'>...</pre>
                             <a class="btn btn-primary" href="auction/<?= $auction['id']?>">Сделать ставку</a>
                         </div>
                     </div>
@@ -99,9 +101,42 @@ $hasSession = $session->session->has('user');
 </div>
 
 <script>
-    var conn = new WebSocket('ws://localhost:3200/websocket');
-    conn.onopen = function (e) {
-        console.log("Connection established!");
+    // var fullName;
+    // var buyBet;
+    //
+    // function sendBuyBet(msg) {
+    //     messages.push(msg);
+    // }
+
+    var socket = new WebSocket("ws://localhost:3200/websocket");
+
+    socket.onopen = function () {
+        alert("Соединение установлено!");
     };
-    console.log(conn.onopen);
+    console.log(socket.readyState);
+    console.log("____");
+
+    socket.onclose = function (e) {
+        console.log("Соединение закрыто. Код «" + event.code + "». Причина «" + event.reason + "».");
+    }
+    console.log(socket.readyState);
+    console.log("____");
+
+    socket.onmessage = function(event)
+    {
+        console.log("____ onMessage");
+        socket.send("Как дела??");
+        console.log(event.data);
+        console.log("Пришло сообщение «" + event.data + "».");
+        console.log("____");
+    };
+    console.log(socket.readyState);
+    console.log("____");
+
+    socket.onerror = function(error) {
+        alert("Ошибка " + error.message);
+    };
+    console.log(socket.readyState);
+    console.log("____");
+
 </script>
